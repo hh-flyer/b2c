@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме - hh.kz</title>
+    <style>
+	/* Обычный шрифт */
+@font-face {
+    font-family: 'hhsans';
+    src: url('fonts/hhsans-Regular.woff2') format('woff2'),
+         url('fonts/hhsans-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Жирный шрифт (для заголовков) */
+@font-face {
+    font-family: 'hhsans';
+    src: url('fonts/hhsans-Display.woff2') format('woff2'),
+         url('fonts/hhsans-Display.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+        :root { 
+            --hh-red: #E32F45;
+            --hh-orange: #FF7B54;
+            --hh-burgundy: #4A050F;
+            --hh-beige: #FFF8F0;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'hhsans', sans-serif;
+            min-height: 100vh;
+            color: #ffffff; 
+            /* Теплый градиент */
+            background: radial-gradient(circle at 100% 0%, #FF7B54 0%, #E32F45 35%, #4A050F 80%, #140003 100%);
+            background-attachment: fixed;
+			animation: fadeInPage 1s ease-in;
+        }
+
+@keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+
+        .header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 16px 20px; 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo-icon { 
+            width: 40px; /* Размер логотипа, можешь менять */
+            height: 40px; 
+            object-fit: contain; /* Чтобы пропорции картинки не искажались */
+            border-radius: 50%; /* Убери эту строку, если твой логотип квадратный или прямоугольный и скругление не нужно */
+        }
+        
+        .app-btn { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            color: var(--hh-beige); 
+            padding: 8px 16px; border-radius: 100px; 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none; font-size: 13px; font-weight: 700;
+        }
+
+        .hero { padding: 40px 20px 40px; text-align: center; }
+        
+        .badge {
+            display: inline-block; padding: 8px 14px; border-radius: 100px;
+            background: rgba(227, 47, 69, 0.3); border: 2px solid var(--hh-beige);
+            color: var(--hh-beige); font-size: 12px; font-weight: 700; text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 { 
+            font-size: 40px; line-height: 1.05; font-weight: 700; letter-spacing: 1px; 
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--hh-beige) 20%, #FF9EAA 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p { font-size: 16px; color: rgba(255, 248, 240, 0.7); line-height: 1.5; }
+
+        .feed-container {
+            display: flex; flex-direction: column; gap: 24px;
+            padding: 0 20px 60px; max-width: 600px; margin: 0 auto;
+        }
+
+        .glass-card { 
+            position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px; padding: 24px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+			
+/* Для анимации скролла */
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* Класс, который добавляется скриптом при скролле */
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+	
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            30%, 100% { left: 150%; }
+        }
+
+        /* Анимация задержки для карточек */
+        .glass-card:nth-child(even) { animation-delay: 0.5s; }
+        .glass-card:nth-child(even)::before { animation-delay: 0.5s; }
+
+        .card-number {
+            position: absolute; top: -10px; right: 10px;
+            font-size: 100px; font-weight: 700;
+            color: white; opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .card-title-eng {
+            display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; 
+            letter-spacing: 1px; color: white; margin-bottom: 12px;
+        }
+
+        .glass-card h3 { font-size: 22px; margin: 0 0 20px 0; color: white; }
+
+        .example-box {
+            background: rgba(0, 0, 0, 0.2); border-radius: 16px; padding: 16px; margin-bottom: 12px;
+            font-size: 12px; line-height: 1.5;
+        }
+
+        .example-box.bad { border-left: 3px solid rgba(255,255,255,0.2); }
+        .example-box.good { 
+            border-left: 3px solid var(--hh-orange); 
+            background: rgba(227, 47, 69, 0.15);
+        }
+        .example-box.neutral { border-left: 3px solid var(--hh-beige); }
+
+        .label { 
+            font-size: 10px; text-transform: uppercase; font-weight: 700; 
+            color: #fff; margin-bottom: 8px; display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="images/лого белый 1 хх.png" alt="hh.kz" class="logo-icon">
+        <a href="https://my.hh.ru/21D" class="app-btn">Скачать приложение</a>
+    </div>
+    
+    <div class="hero">
+        <div class="badge">Гайд для кандидатов</div>
+        <h1>Работа для всех<br>на hh.kz</h1>
+        <p>Сегодня сильное резюме строится вокруг нескольких ключевых подходов:</p>
+    </div>
+
+    <div class="feed-container">
+        
+        <!-- 01 Positioning -->
+        <div class="glass-card">
+            <div class="card-number">01</div>
+            <span class="card-title-eng">Professional Positioning</span>
+            <h3>Чёткое профессиональное позиционирование</h3>
+            <div class="example-box bad"><span class="label">Слабое позиционирование</span>Руководитель</div>
+            <div class="example-box good"><span class="label">Сильное позиционирование</span>Коммерческий директор с опытом развития продаж, управления командами и масштабирования бизнеса в Центральной Азии.</div>
+        </div>
+
+        <!-- 02 Executive Summary -->
+        <div class="glass-card">
+            <div class="card-number">02</div>
+            <span class="card-title-eng">Executive Summary</span>
+            <h3>Краткая презентация опыта, экспертизы и достижений</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Руководитель с 12-летним опытом в управлении продажами и развитии бизнеса. Управлял командами до 100 человек, запускал новые направления и отвечал за выполнение стратегических показателей компании.</div>
+        </div>
+
+        <!-- 03 Career Narrative -->
+        <div class="glass-card">
+            <div class="card-number">03</div>
+            <span class="card-title-eng">Career Narrative</span>
+            <h3>Логичная карьерная история и рост ответственности</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Специалист → Старший специалист → Руководитель группы → Руководитель департамента → Директор направления.</div>
+        </div>
+
+        <!-- 04 Business Impact -->
+        <div class="glass-card">
+            <div class="card-number">04</div>
+            <span class="card-title-eng">Business Impact</span>
+            <h3>Влияние на бизнес и результаты компании</h3>
+            <div class="example-box bad"><span class="label">Вместо</span>Управлял отделом продаж.</div>
+            <div class="example-box good"><span class="label">Лучше</span>Увеличил выручку подразделения на 35% за два года за счет внедрения новой системы управления продажами.</div>
+        </div>
+
+        <!-- 05 Data-Driven -->
+        <div class="glass-card">
+            <div class="card-number">05</div>
+            <span class="card-title-eng">Data-Driven Resume</span>
+            <h3>Достижения через цифры, KPI и метрики</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Управлял командой из 50 сотрудников и бюджетом свыше 500 млн тенге. Обеспечил рост прибыли компании на 20% по итогам года.</div>
+        </div>
+
+        <!-- 06 STAR -->
+        <div class="glass-card">
+            <div class="card-number">06</div>
+            <span class="card-title-eng">STAR (Situation, Task, Action, Result)</span>
+            <h3>Структурное описание достижений</h3>
+            <div class="example-box neutral"><span class="label">S (Ситуация)</span>Компания столкнулась со снижением продаж.</div>
+			<div class="example-box neutral"><span class="label">T (Задача)</span>Восстановить показатели и повысить эффективность отдела.</div>
+			<div class="example-box neutral"><span class="label">A (Действие)</span>Пересмотрена структура команды, внедрены новые KPI и система мотивации.</div>
+			<div class="example-box neutral"><span class="label">R (Результат)</span>Рост продаж на 25% за 6 месяцев.</div>
+        </div>
+		
+
+        <!-- 07 Resume Tailoring -->
+        <div class="glass-card">
+            <div class="card-number">07</div>
+            <span class="card-title-eng">Resume Tailoring</span>
+            <h3>Адаптация резюме под конкретную вакансию</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Для позиции коммерческого директора акцент на продажах, прибыли и стратегии.</br></br>Для позиции операционного директора — на процессах, эффективности и управлении изменениями.</div>
+        </div>
+
+        <!-- 08 ATS -->
+        <div class="glass-card">
+            <div class="card-number">08</div>
+            <span class="card-title-eng">ATS (Applicant Tracking System)</span>
+            <h3>Оптимизация под системы автоматического отбора</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Если в вакансии указаны «стратегическое управление», «P&L», «бюджетирование», «управление командой», эти ключевые слова должны присутствовать в резюме.</div>
+        </div>
+
+        <!-- 09 Skills -->
+        <div class="glass-card">
+            <div class="card-number">09</div>
+            <span class="card-title-eng">Skills-Based Hiring</span>
+            <h3>Акцент на реальные навыки и компетенции</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Стратегическое планирование, управление командами, бюджетирование, переговоры, управление изменениями, развитие бизнеса, аналитика и принятие решений.</div>
+        </div>
+
+        <!-- 10 AI Literacy -->
+        <div class="glass-card">
+            <div class="card-number">10</div>
+            <span class="card-title-eng">AI Literacy</span>
+            <h3>Умение использовать инструменты искусственного интеллекта</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Использование AI-инструментов для анализа данных, подготовки отчетности, автоматизации процессов и повышения эффективности работы команды.</div>
+        </div>
+
+        <!-- 11 Personal Branding -->
+        <div class="glass-card">
+            <div class="card-number">11</div>
+            <span class="card-title-eng">Personal Branding</span>
+            <h3>Личный бренд, публикации, выступления, экспертность</h3>
+            <div class="example-box neutral"><span class="label">Пример</span>Выступления на отраслевых конференциях, публикации экспертных материалов, участие в профессиональных ассоциациях и публичных дискуссиях по развитию бизнеса и управлению.</div>
+        </div>
+
+    </div>
+	<script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.glass-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
